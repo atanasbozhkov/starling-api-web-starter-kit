@@ -1,12 +1,12 @@
 {
-  "clientId": "<application client id>",
-  "clientSecret": "<application client secret>",
+  "clientId": "1GnBeSDqW3GiZsV8GmgD",
+  "clientSecret": "ino4qYEXfta4gKK7TXyCp33zF2BIzJN0kvVU0s1h",
 
   "cookieSecret": "21e361d0-ff2c-4763-a084-1032f2103ce8",
 
   "personalTagStore": "../starling-api-web-starter-kit-personal-tag-store",
   "productionApi": "https://api.starlingbank.com",
-  "personalAccessToken": "<personal access token>",
+  "personalAccessToken": "eyJhbGciOiJQUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAI1TS67bMAy8SuD100Piv717u16gB6AlKhEiS4Ykp30oevfSlpzETVt0SXHIGQ6pH5nyPuszmNS7D-C0MucBzPWd2zF7y_w8UHIYalEJQHasypyVBVZsaE8VK6GoB5StrI8dgfH7lPVlUzdlVXVd95YpCFl_qk-nps2L5QE4t7MJX6wW6L4q8f-9g72iiRUnWfAORMMgH4CV1VCyrmtq1rZli0Uuq5IvFTTRB-fofazKhaBCWbMGEVmJ7ZF1cshZx0WBEru6aqtlYG4nJPiIAQQE6LlDCHhIytlllc7C54Q9ZcQBQgB-GdGEGOMISvcoVDiM4K4YJg0cmTIBzw6CsibVpYZKUKmSCl18n-CT9AUHxgN_wGk3RtBumHVigz6DVkICBVykMO5vO5oYcHAitcMQNLJ5upOyYdbXFDkrFWXVCGeMnfnsgx03Ym6NVG5cp2FWMjkb4WPqbzN_c4pcjNlljMmR6Q4NLSjlQAhH20qTzIPnTk0PAxbtjIiDszt7f2_24ky0YQ4X65Rf0IqMvCkxg05eTCT2LtDQ1rEXqJFCDzeq8OxsCZwuwSFHEpYK1nVtqWd4XCHJ2pIDaCCFiZNfUMwaBaMGj-PZO_-4h01PDKJDq-rY7I-0uyvTyofnfi91_-qUyDdvVmRywe9p0u8wML7-jujXjnNz-X62k5CPg9SWb7q224gntn3N1Yf4X54M251OZMh-_gKwdrQi5wQAAA.Opb14WqVYZBEoykGTh_0U19PjZNdt1Iw9a0n7BRavuqrUhVhBYjJVdfpqc9zIP_2i42mluctrACRPzJSabjIwr1caDe_JKRPGRv8THmLCe9mqut3J8xxja17TaRKxMNnfr9Qk_mLD77yxdOsvL8iJ5UVXY1Io6ztDADqdRrVJKIOdhWNUCCPowaYBHo3gsjaRoEmtjDgbIGc-XNY7qqfHn3A_9gUGp_P55XbCyz4vTOEXWvfOmX8FkbOqeE00vQrcaJAN0LlS03nXz0qLI3aEdkT7tKc94SrkCkAjZ6mdIdQXuxgY2JfivxW-o1ZC-7e2LqJnrr1d5FUdwddLD7PAZeDqRd5CEWtJ8pbBRI0b5zolY3yn5SlMGnl4cKUhQjmahdHMqa4OioXsRnmhaVp1OJIBu4rJOZfuJ7m-9WjbgZdybeQK4fSzTI3Qc-s0ifq7XTo9gEDMJ0QayGHx3JYwYq9pOBKwlcLhimBTDpi7JoC0wt9A4vsXASMhEFShqOXLJeo4nH4BB9cXFAPCqUb-S_WT1iLG8u6UFycJB_qQUNqnuapVao9NMNZYH6_3KUnfRSa6Ppjl4zwBM16dmVUvKZiOzIDxTxIksyM7N0qDEoMyY12yPtyCAWkvEwZ3CX7Yg41UrpHrWgc7Q9g6NRqHDR_xbIx5Ydbn1tQ5oEWCpQ",
 
   "SANDBOX_CONFIG_COMMENT": "Do not keep the token store file in the app root dir or it will restart when you are watching it with yarn run dev everytime it is written to!",
   "sandboxLocalTokenStore": "../starling-api-web-starter-kit-sandbox-token-store.json",

@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+// @ts-ignore
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { object } from 'prop-types';
 import 'react-select/dist/react-select.css';
 
-class AppContainer extends Component {
+interface AppContainerProps {
+  routes: any;
+  store: any;
+}
+
+class AppContainer extends Component<AppContainerProps> {
   static propTypes = {
     routes: object.isRequired,
     store: object.isRequired

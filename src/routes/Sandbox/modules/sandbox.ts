@@ -22,6 +22,8 @@ export const loadTransactions = (source, from, to) => {
   return dispatch => {
     getTransactions(source, from, to)
       .then(transactionResponse => {
+        console.log(`Transaction Response`);
+        console.log(transactionResponse);
         dispatch(retrievedTransactions(transactionResponse.data));
         setTimeout(() => dispatch(setLoading(false)), loaderDelay);
       })
@@ -35,6 +37,8 @@ export const loadBalance = () => {
   return dispatch => {
     getBalance()
       .then(balanceResponse => {
+        console.log(`Balance response`);
+        console.log(balanceResponse);
         dispatch(retrievedBalance(balanceResponse.data));
         setTimeout(() => dispatch(setLoading(false)), loaderDelay);
       })
@@ -49,6 +53,8 @@ export const loadCustomer = () => {
   return dispatch => {
     getCustomer()
       .then(customerResponse => {
+        console.log(`Customer Response`);
+        console.log(customerResponse);
         dispatch(retrievedCustomer(customerResponse.data));
         setTimeout(() => dispatch(setLoading(false)), loaderDelay);
       })

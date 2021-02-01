@@ -9,7 +9,7 @@ const LOADING = 'LOADING';
 // ------------------------------------
 const loadingAction = createAction(LOADING);
 
-export const setLoading = (isLoading) => {
+export const setLoading = (isLoading: boolean) => {
   return dispatch => {
     dispatch(loadingAction(isLoading));
   };

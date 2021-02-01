@@ -1,19 +1,23 @@
 import React from 'react';
 import { Button, Container, Grid, Header, Icon, Label, List, Loader, Segment, Statistic } from 'semantic-ui-react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { amountDisplay } from '../../commons/utils';
 import './Dashboard.scss';
-import { array, element, shape, string } from 'prop-types';
 
-class Dashboard extends React.Component {
+export interface DashboardProps {
+  balance: Balance;
+  transactions: Array<any>;
+  customer: any;
+  mode: string;
+}
 
-  static propTypes = {
-    balance: shape(),
-    transactions: array,
-    customer: shape(),
-    mode: string.isRequired,
-    children: element
-  };
+export interface Balance {
+  effectiveBalance: any;
+  clearedBalance: any;
+  pendingTransactions: any;
+}
+
+class Dashboard extends React.Component<DashboardProps> {
 
   render () {
     const { customer, balance, mode } = this.props;
@@ -64,8 +68,10 @@ class Dashboard extends React.Component {
     </Container>;
   }
 }
-
-const Balance = (props) => {
+export interface BalanceProps {
+  balance: Balance;
+}
+const Balance: React.FC<BalanceProps> = (props) => {
   const { balance } = props;
   if (balance) {
     const effectiveBalance = balance.effectiveBalance ? amountDisplay(balance.effectiveBalance) : '£0';
@@ -106,7 +112,16 @@ const Balance = (props) => {
   }
 };
 
-const CustomerDetails = (props) => {
+export interface CustomerDetailsProps {
+  customer: {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    dateOfBirth: string
+  }
+}
+const CustomerDetails: React.FC<CustomerDetailsProps> = (props) => {
   const { customer } = props;
   if (customer) {
     const { firstName, lastName, email, phone, dateOfBirth } = customer;

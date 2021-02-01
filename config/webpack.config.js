@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const debug = require('debug')('app:config:webpack');
 const project = require('./project.config');
+const TsCheckerWebpackPlugin = require('ts-checker-webpack-plugin');
 
 const inProject = path.resolve.bind(path, project.path_base);
 const inProjectSrc = (file) => inProject(project.dir_client, file);
@@ -32,7 +33,7 @@ const config = {
       inProject(project.dir_client),
       'node_modules'
     ],
-    extensions: [ '*', '.js', '.jsx', '.json' ]
+    extensions: [ '*', '.js', '.jsx', '.ts', '.tsx', '.json' ]
   },
   externals: {},
   module: {
@@ -44,7 +45,13 @@ const config = {
       __DEV__,
       __TEST__,
       __PROD__
-    }, project.globals))
+    }, project.globals)),
+
+    new TsCheckerWebpackPlugin({
+      tsconfig: path.resolve("tsconfig.json"),
+      memoryLimit: 512, // optional, maximum memory usage in MB
+      diagnosticFormatter: "ts-loader", // optional, one of "ts-loader", "stylish", "codeframe"
+    })
   ]
 };
 
@@ -66,7 +73,7 @@ if (!__TEST__) {
 }
 
 config.module.rules.push({
-  test: /\.(js|jsx)$/,
+  test: /\.(ts|tsx)$/,
   exclude: /node_modules/,
   use: [ {
     loader: 'babel-loader',
@@ -90,7 +97,8 @@ config.module.rules.push({
       ],
       presets: [
         '@babel/preset-react',
-        [ '@babel/preset-env', { modules: false } ]
+        [ '@babel/preset-env', { modules: false } ],
+        [ "@babel/preset-typescript" ]
       ]
     }
   } ]

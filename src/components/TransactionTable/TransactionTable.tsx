@@ -1,8 +1,8 @@
 import React from 'react';
-import _ from 'lodash';
 import { amountDisplay, iconClasses, lookup, sourceDisplay } from '../../commons/utils';
 import { Icon } from 'semantic-ui-react';
 import TransactionTags from './TransactionTags';
+import { assign, keys } from 'lodash';
 
 export const transactionsProjection = {
   feedItemUid: { label: 'ID', primaryKey: true },
@@ -31,9 +31,9 @@ export const transactionsProjection = {
   }
 };
 
-export const transactionsSelection = _.keys(transactionsProjection).filter(fieldName => !fieldName.includes("Uid"));
+export const transactionsSelection = keys(transactionsProjection).filter(fieldName => !fieldName.includes("Uid"));
 
-export const transactionsWithTagsProjection = _.assign({}, transactionsProjection, {
+export const transactionsWithTagsProjection = assign({}, transactionsProjection, {
   tags: {
     label: 'Tags',
     cellStyle: { minWidth: '300px' },

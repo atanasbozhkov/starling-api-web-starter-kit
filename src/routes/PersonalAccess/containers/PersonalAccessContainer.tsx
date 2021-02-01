@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { pick } from 'lodash';
 import { connect } from 'react-redux';
 import {
   addTransactionTag,
@@ -25,6 +25,6 @@ const mapDispatchToProps = {
   getTagsLike
 };
 
-const mapStateToProps = (state) => _.pick(state, 'personalAccess');
+const mapStateToProps = (state) => pick(state, 'personalAccess');
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalAccessView);

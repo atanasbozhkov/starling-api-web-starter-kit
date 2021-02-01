@@ -1,7 +1,7 @@
 import React from 'react';
 import URLSearchParams from 'url-search-params';
 import { Button, Container, Grid, Header, Icon, Loader, Segment } from 'semantic-ui-react';
-import Dashboard from '../../../components/Dashboard/Dashboard';
+import Dashboard, { Balance } from '../../../components/Dashboard/Dashboard';
 import UserDenied from '../../../components/UserDenied/UserDenied';
 import { Link } from 'react-router';
 import './PersonalAccessView.scss';
@@ -11,6 +11,31 @@ import {
   transactionsWithTagsProjection,
   transactionsWithTagsSelection
 } from '../../../components/TransactionTable/TransactionTable';
+
+export type Transaction = any;
+
+export interface PersonalAccess {
+  transactions: Array<Transaction>
+  customer: any
+  balance: Balance;
+  loading: boolean;
+  transactionTags: any;
+  tags: Array<any>;
+  tagSuggestions: Array<any>;
+}
+
+export interface PersonalAccessViewProps {
+  personalAccess: PersonalAccess;
+  loadTransactions: () => void;
+  loadBalance: () => void;
+  loadCustomer: () => void;
+  setLoading: () => void;
+  getTransactionsTags: () => void;
+  getTransactionTags: () => void;
+  addTransactionTag: () => void;
+  getTags: () => void;
+  getTagsLike: () => void;
+}
 
 class PersonalAccessView extends React.Component {
 
@@ -35,7 +60,7 @@ class PersonalAccessView extends React.Component {
     getTagsLike: PropTypes.func.isRequired
   };
 
-  componentWillMount () {
+  componentWillMount() {
     this.props.loadTransactions();
     this.props.loadCustomer();
     this.props.loadBalance();
@@ -44,11 +69,11 @@ class PersonalAccessView extends React.Component {
     this.props.getTags();
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.location.href = '/api/logout';
   }
 
-  renderDashboard () {
+  renderDashboard() {
     const { transactions, balance, customer, transactionTags, tags, tagSuggestions } = this.props.personalAccess;
     if (balance && customer) {
       return <Dashboard
@@ -58,26 +83,26 @@ class PersonalAccessView extends React.Component {
         balance={balance}>
         {transactions && transactions.length
           ? <QuickTable
-           projection={transactionsWithTagsProjection}
-           selection={transactionsWithTagsSelection}
-           items={transactions}
-           context={{ transactionTags, tags, tagSuggestions }}/>
+            projection={transactionsWithTagsProjection}
+            selection={transactionsWithTagsSelection}
+            items={transactions}
+            context={{ transactionTags, tags, tagSuggestions }}/>
           : <p>No transactions on record.</p>}
       </Dashboard>;
     } else {
-      return <AnonymousProfile />;
+      return <AnonymousProfile/>;
     }
   }
 
-  render () {
+  render() {
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
     const { loading } = this.props.personalAccess;
     return (
       <Grid>
-        <br />
-        {loading ? <Loading /> : this.renderDashboard()}
-        {error && error === 'access_denied' ? <UserDenied /> : null}
+        <br/>
+        {loading ? <Loading/> : this.renderDashboard()}
+        {error && error === 'access_denied' ? <UserDenied/> : null}
       </Grid>
     );
   }

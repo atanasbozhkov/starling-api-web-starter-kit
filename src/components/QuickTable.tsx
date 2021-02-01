@@ -1,15 +1,15 @@
 import React from 'react';
-import _ from 'lodash';
+import { filter, map, get, entries } from 'lodash';
 import { joinClasses } from '../commons/utils';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 export const getUniqueRowId = (row, projection) => {
-  const keyParts = _.filter(_.entries(projection), ([ propertyName, { primaryKey } ]) => {
+  const keyParts = filter(entries(projection), ([ propertyName, { primaryKey } ]) => {
     return primaryKey;
   });
-  const keyValues = _.map(keyParts, ([ propertyName ]) => {
-    return _.get(row, propertyName);
+  const keyValues = map(keyParts, ([ propertyName ]) => {
+    return get(row, propertyName);
   });
   return keyValues.join('_');
 };
@@ -17,13 +17,13 @@ export const getUniqueRowId = (row, projection) => {
 export const Item = ({ rowId, projection, selection, item, selected, rowClickHandler, dispatch, index, context }) => {
   return <tr key={`row_${rowId}`} className={selected ? 'selected' : (rowClickHandler ? 'actionable' : null)}
              onClick={() => rowClickHandler ? rowClickHandler(item) : null}>
-    {_.map(selection, (k, i) => {
+    {map(selection, (k, i) => {
       const cellDef = projection[ k ];
-      const cellVal = _.get(item, k);
+      const cellVal = get(item, k);
       return cellDef
         ? <td style={cellDef.cellStyle ? cellDef.cellStyle : null}
               title={cellDef.cellTitle ? cellDef.cellTitle(item, cellVal, index, context) : null}
-              className={joinClasses(cellDef.cellClass, cellDef.cellAction ? 'actionable' : null)}
+              className={joinClasses({classes : [cellDef.cellClass, cellDef.cellAction ? 'actionable' : null]})}
               onClick={cellDef.cellAction ? () => cellDef.cellAction(item, cellVal, dispatch, index, context) : null}
               key={`cell_${rowId}_${i}`}>
                {cellDef.formatter ? cellDef.formatter(item, cellVal, dispatch, index, context) : cellVal}
@@ -61,13 +61,13 @@ const QuickTable = ({
   if (items && items.length) {
     return <Table style={style} className={isSummaryStyle ? 'table--summary' : null}>
       <thead>
-      <tr>{_.map(selection, (k, i) => {
+      <tr>{map(selection, (k, i) => {
         const def = projection[ k ];
         return def ? <th key={`${k}_${i}`}>{def.label}</th> : null;
       })}</tr>
       </thead>
       <tbody>{
-        _.map(items, (row, i) => {
+        map(items, (row, i) => {
           const id = getUniqueRowId(row, projection);
           const isSelected = selectedItem && getUniqueRowId(selectedItem, projection) === id;
           return <Item key={`row_${id}_${i}`} index={i} rowId={id} projection={projection} selection={selection}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../../components/Header';
 
-export const CoreLayout = ({ children }) =>
+export const CoreLayout: React.FC = ({ children }) =>
   <div className='fw fh'>
     <div className='headerMargin'>
       <Header />
