@@ -2,52 +2,54 @@ import React from 'react';
 import URLSearchParams from 'url-search-params';
 import { Button, Container, Grid, Header, Icon, Loader, Segment } from 'semantic-ui-react';
 import Dashboard from '../../../components/Dashboard/Dashboard';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import UserDenied from '../../../components/UserDenied/UserDenied';
 import QuickTable from '../../../components/QuickTable';
-import PropTypes from 'prop-types';
 import { transactionsProjection, transactionsSelection } from '../../../components/TransactionTable/TransactionTable';
+import { Balance, Customer, Transaction } from "../../../types/types";
 
-class SandboxView extends React.Component {
+export interface SandboxViewProps {
+  loadTransactions: (source?: any, from?: string, to?: string) => void;
+  loadBalance: () => void;
+  loadCustomer: () => void;
+  setLoading: (isLoading: boolean) => void;
+  sandbox: {
+    loading: boolean;
+    transactions: Array<Transaction>;
+    balance: Balance
+    customer: Customer;
+  }
+}
 
-  static propTypes = {
-    loadTransactions: PropTypes.func.isRequired,
-    loadBalance: PropTypes.func.isRequired,
-    loadCustomer: PropTypes.func.isRequired,
-    setLoading: PropTypes.func.isRequired,
-    sandbox: PropTypes.shape({
-      loading: PropTypes.bool,
-      transactions: PropTypes.array,
-      balance: PropTypes.object,
-      customer: PropTypes.object
-    }).isRequired
-  };
 
-  componentWillMount () {
+//TODO: Migrate this to a React.FC
+class SandboxView extends React.Component<SandboxViewProps> {
+
+  componentWillMount() {
     this.props.setLoading(true);
     this.props.loadTransactions();
     this.props.loadCustomer();
     this.props.loadBalance();
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.location.href = '/api/logout';
   }
 
-  render () {
+  render() {
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
     const { transactions, balance, customer, loading } = this.props.sandbox;
     return (
       <Grid>
-        <br />
-        {loading ? <Loading />
+        <br/>
+        {loading ? <Loading/>
           : transactions && balance
-           ? <Dashboard mode={'Sandbox'} customer={customer} transactions={transactions} balance={balance}>
+            ? <Dashboard mode={'Sandbox'} customer={customer} transactions={transactions} balance={balance}>
               <QuickTable projection={transactionsProjection} selection={transactionsSelection} items={transactions}/>
             </Dashboard>
-           : <AnonymousProfile />}
-        {error && error === 'access_denied' ? <UserDenied /> : null}
+            : <AnonymousProfile/>}
+        {error && error === 'access_denied' ? <UserDenied/> : null}
       </Grid>
     );
   }
@@ -59,7 +61,7 @@ const Loading = () => {
   );
 };
 
-const AnonymousProfile = () => {
+const AnonymousProfile:React.FC = () => {
   return (
     <Container>
       <Link to='/'>

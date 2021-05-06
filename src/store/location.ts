@@ -1,24 +1,28 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-import { Action, Dispatch } from "redux";
+import { Action, AnyAction, Dispatch } from "redux";
 
-export const LOCATION_CHANGE = 'LOCATION_CHANGE';
+export interface PayloadAction extends AnyAction {
+  payload: any; // TODO: type this so that PayloadAction can be generic
+}
+
+export const LOCATION_CHANGE = "LOCATION_CHANGE";
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function locationChange (location = '/') {
+export function locationChange(location = "/") {
   return {
-    type    : LOCATION_CHANGE,
-    payload : location
+    type: LOCATION_CHANGE,
+    payload: location,
   };
 }
 
 // ------------------------------------
 // Specialized Action Creator
 // ------------------------------------
-export const updateLocation = ({ dispatch }: { dispatch: Dispatch<any>}) => {
+export const updateLocation = ({ dispatch }: { dispatch: Dispatch<any> }) => {
   return (nextLocation: string) => dispatch(locationChange(nextLocation));
 };
 
@@ -26,8 +30,9 @@ export const updateLocation = ({ dispatch }: { dispatch: Dispatch<any>}) => {
 // Reducer
 // ------------------------------------
 const initialState = null;
-export default function locationReducer (state = initialState, action: Action) {
-  return action.type === LOCATION_CHANGE
-    ? action.payload
-    : state;
+export default function locationReducer(
+  state = initialState,
+  action: AnyAction
+) {
+  return action.type === LOCATION_CHANGE ? action.payload : state;
 }

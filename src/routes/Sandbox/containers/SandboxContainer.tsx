@@ -7,6 +7,7 @@ import {
   setLoading
 } from '../modules/sandbox';
 import SandboxView from '../views/SandboxView';
+import { StoreSchema } from "../../../store/createStore";
 
 const mapDispatchToProps = {
   loadTransactions,
@@ -16,7 +17,7 @@ const mapDispatchToProps = {
   doSandboxTransactionFilter
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: StoreSchema) => ({
   sandbox: state.sandbox
 });
 

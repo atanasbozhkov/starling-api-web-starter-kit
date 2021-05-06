@@ -15,7 +15,7 @@ export const getUniqueRowId = (row, projection) => {
 };
 
 export const Item = ({ rowId, projection, selection, item, selected, rowClickHandler, dispatch, index, context }) => {
-  return <tr key={`row_${rowId}`} className={selected ? 'selected' : (rowClickHandler ? 'actionable' : null)}
+  return <tr key={`row_${rowId}`} className={selected ? 'selected' : (rowClickHandler ? 'actionable' : undefined)}
              onClick={() => rowClickHandler ? rowClickHandler(item) : null}>
     {map(selection, (k, i) => {
       const cellDef = projection[ k ];
@@ -24,7 +24,7 @@ export const Item = ({ rowId, projection, selection, item, selected, rowClickHan
         ? <td style={cellDef.cellStyle ? cellDef.cellStyle : null}
               title={cellDef.cellTitle ? cellDef.cellTitle(item, cellVal, index, context) : null}
               className={joinClasses({classes : [cellDef.cellClass, cellDef.cellAction ? 'actionable' : null]})}
-              onClick={cellDef.cellAction ? () => cellDef.cellAction(item, cellVal, dispatch, index, context) : null}
+              onClick={cellDef.cellAction ? () => cellDef.cellAction(item, cellVal, dispatch, index, context) : undefined}
               key={`cell_${rowId}_${i}`}>
                {cellDef.formatter ? cellDef.formatter(item, cellVal, dispatch, index, context) : cellVal}
              </td>
@@ -59,7 +59,7 @@ const QuickTable = ({
                       rowClickHandler, dispatch, isSummaryStyle, style, context
                     }) => {
   if (items && items.length) {
-    return <Table style={style} className={isSummaryStyle ? 'table--summary' : null}>
+    return <Table style={style} className={isSummaryStyle ? 'table--summary' : ''}>
       <thead>
       <tr>{map(selection, (k, i) => {
         const def = projection[ k ];

@@ -1,11 +1,15 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, compose, createStore, Reducer, Store } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 // import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
 // import { updateLocation } from './location';
 export interface StoreSchema {
-  asyncReducers: any;
+  sandbox?: any;
+}
+
+export interface StarlingStore extends Store<StoreSchema> {
+  asyncReducers: Record<string, Reducer<StoreSchema>>;
 }
 export default (initialState = {}, history?: any) => {
   // ======================================================
@@ -30,7 +34,7 @@ export default (initialState = {}, history?: any) => {
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
-  const store = createStore(
+  const initialStore: Store<StoreSchema> = createStore<StoreSchema>(
     makeRootReducer(),
     initialState,
     composeEnhancers(
@@ -38,14 +42,14 @@ export default (initialState = {}, history?: any) => {
       ...enhancers
     )
   );
-  (store as any).asyncReducers = {};
+  const store: StarlingStore = { ...initialStore, asyncReducers: {}};
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   // (store as any).unsubscribeHistory = browserHistory.listen(updateLocation(store));
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       const reducers = require('./reducers').default;
-      store.replaceReducer(reducers((store as any).asyncReducers));
+      store.replaceReducer(reducers(store.asyncReducers));
     });
   }
 
